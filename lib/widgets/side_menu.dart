@@ -32,15 +32,16 @@ class SideMenu extends StatelessWidget {
             iconData: Icons.search,
             onTap: () {},
           ),
-          _SideMenuIconTab(
-            title: 'Radio',
-            iconData: Icons.audiotrack,
-            onTap: () {},
-          ),
+          if (MediaQuery.of(context).size.height > 400)
+            _SideMenuIconTab(
+              title: 'Radio',
+              iconData: Icons.audiotrack,
+              onTap: () {},
+            ),
           SizedBox(
             height: 12.0,
           ),
-          _LibraryPlaylists(),
+          if (MediaQuery.of(context).size.height > 500) _LibraryPlaylists(),
         ],
       ),
     );
