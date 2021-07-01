@@ -2,8 +2,12 @@ import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spotify_ui/data/data.dart';
+import 'package:provider/provider.dart';
 import 'dart:io' as dart_io;
 import 'widgets/widgets.dart';
+import 'screens/playlist_screen.dart';
+import 'models/current_track_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,7 +17,12 @@ void main() async {
           dart_io.Platform.isWindows)) {
     await DesktopWindow.setMinWindowSize(Size(600, 800)); // width, height
   }
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => CurrentTrackModel(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -32,7 +41,7 @@ class MyApp extends StatelessWidget {
         iconTheme: const IconThemeData().copyWith(color: Colors.white),
         fontFamily: 'Montserrat',
         textTheme: TextTheme(
-          headline2: const TextStyle(
+          headline2: TextStyle(
             color: Colors.white,
             fontSize: 32.0,
             fontWeight: FontWeight.bold,
@@ -70,7 +79,11 @@ class Shell extends StatelessWidget {
             child: Row(
               children: [
                 SideMenu(),
-                // PlaylistScreen
+                Expanded(
+                  child: PlaylistScreen(
+                    playlist: lofihiphopPlaylist,
+                  ),
+                ),
               ],
             ),
           ),
